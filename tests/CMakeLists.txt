@@ -105,6 +105,15 @@ target_link_libraries(bluetoothsilfactory_test
     dl
 )
 
+# Test for bluetoothserviceclasses
+add_executable(bluetoothserviceclasses_test
+    unit/bluetoothserviceclasses_test.cpp
+)
+target_link_libraries(bluetoothserviceclasses_test
+    gtest_main
+    gmock_main
+)
+
 # Include Google Test discovery
 include(GoogleTest)
 gtest_discover_tests(utils_test)
@@ -112,3 +121,4 @@ gtest_discover_tests(bluetootherrors_test)
 gtest_discover_tests(bluetoothdevice_test)
 gtest_discover_tests(bluetoothpairstate_test)
 gtest_discover_tests(bluetoothsilfactory_test)
+gtest_discover_tests(bluetoothserviceclasses_test)
