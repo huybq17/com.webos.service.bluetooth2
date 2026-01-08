@@ -51,6 +51,7 @@ public:
 	void markAsIncoming() { mIncoming = true; }
 
 private:
+	friend class BluetoothPairStateTest;  // For unit testing
 	bool mPairing;
 	bool mPairable;
 	uint32_t mPairableTimeout;
