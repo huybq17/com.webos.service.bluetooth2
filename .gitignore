@@ -20,3 +20,4 @@ src/*.pc
 oe-logs
 oe-workdir
 tests/build/
+_codeql_detected_source_root
