@@ -81,7 +81,7 @@ inline gchar* g_build_path(const gchar *separator, ...) {
     std::string result;
     const gchar* part;
     while ((part = va_arg(args, const gchar*)) != nullptr) {
-        if (!result.empty() && !result.empty() && result.back() != '/') {
+        if (!result.empty() && result.back() != '/') {
             result += separator;
         }
         result += part;
