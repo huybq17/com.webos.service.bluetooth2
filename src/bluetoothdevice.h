@@ -63,6 +63,7 @@ public:
 	std::string getTypeAsString() const;
 
 private:
+	friend class BluetoothDeviceTest;  // For unit testing
 	std::string mName;
 	std::string mAddress;
 	BluetoothDeviceType mType;
