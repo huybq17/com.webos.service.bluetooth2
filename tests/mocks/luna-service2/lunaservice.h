@@ -18,6 +18,7 @@
 #define LUNASERVICE_H_
 
 #include <cstddef>
+#include <string>
 
 // Forward declarations
 typedef struct LSHandle LSHandle;
@@ -34,6 +35,7 @@ struct LSMessage {
     const char* senderServiceName;
     bool isSubscription;
     int refCount;
+    mutable std::string response;  // Added for mock testing
 };
 
 // Mock functions

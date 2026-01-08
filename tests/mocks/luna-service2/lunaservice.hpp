@@ -23,6 +23,15 @@
 
 namespace LS {
 
+class Error : public std::exception {
+public:
+    Error() {}
+    Error(const char* msg) : mMessage(msg) {}
+    const char* what() const noexcept override { return mMessage.c_str(); }
+private:
+    std::string mMessage;
+};
+
 class Message {
 public:
     Message() : mMessage(nullptr) {}
@@ -36,6 +45,13 @@ public:
 
     bool isSubscription() const {
         return mMessage ? mMessage->isSubscription : false;
+    }
+
+    void respond(const char* payload) const {
+        // Mock implementation - stores response
+        if (mMessage) {
+            mMessage->response = payload;
+        }
     }
 
 private:

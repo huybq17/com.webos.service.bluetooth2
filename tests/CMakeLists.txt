@@ -114,6 +114,16 @@ target_link_libraries(bluetoothserviceclasses_test
     gmock_main
 )
 
+# Test for bluetoothprofileservice (logic tests only)
+add_executable(bluetoothprofileservice_test
+    unit/bluetoothprofileservice_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/utils.cpp
+)
+target_link_libraries(bluetoothprofileservice_test
+    gtest_main
+    gmock_main
+)
+
 # Include Google Test discovery
 include(GoogleTest)
 gtest_discover_tests(utils_test)
@@ -122,3 +132,4 @@ gtest_discover_tests(bluetoothdevice_test)
 gtest_discover_tests(bluetoothpairstate_test)
 gtest_discover_tests(bluetoothsilfactory_test)
 gtest_discover_tests(bluetoothserviceclasses_test)
+gtest_discover_tests(bluetoothprofileservice_test)
