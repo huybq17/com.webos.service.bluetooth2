@@ -145,6 +145,36 @@ target_link_libraries(bluetoothmanageradapter_test
     gmock_main
 )
 
+# Test for bluetootha2dpprofileservice logic
+add_executable(bluetootha2dpprofileservice_test
+    unit/bluetootha2dpprofileservice_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/utils.cpp
+)
+target_link_libraries(bluetootha2dpprofileservice_test
+    gtest_main
+    gmock_main
+)
+
+# Test for bluetoothavrcpprofileservice logic
+add_executable(bluetoothavrcpprofileservice_test
+    unit/bluetoothavrcpprofileservice_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/utils.cpp
+)
+target_link_libraries(bluetoothavrcpprofileservice_test
+    gtest_main
+    gmock_main
+)
+
+# Test for bluetoothgattprofileservice logic
+add_executable(bluetoothgattprofileservice_test
+    unit/bluetoothgattprofileservice_test.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/utils.cpp
+)
+target_link_libraries(bluetoothgattprofileservice_test
+    gtest_main
+    gmock_main
+)
+
 # Include Google Test discovery
 include(GoogleTest)
 gtest_discover_tests(utils_test)
@@ -156,3 +186,6 @@ gtest_discover_tests(bluetoothserviceclasses_test)
 gtest_discover_tests(bluetoothprofileservice_test)
 gtest_discover_tests(main_test)
 gtest_discover_tests(bluetoothmanageradapter_test)
+gtest_discover_tests(bluetootha2dpprofileservice_test)
+gtest_discover_tests(bluetoothavrcpprofileservice_test)
+gtest_discover_tests(bluetoothgattprofileservice_test)
