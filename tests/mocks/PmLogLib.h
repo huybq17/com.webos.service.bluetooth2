@@ -22,6 +22,10 @@
 // PmLogContext type
 typedef void* PmLogContext;
 
+// PmLogErr type
+typedef int PmLogErr;
+#define kPmLogErr_None 0
+
 // Global log context (mock)
 extern PmLogContext logContext;
 
@@ -31,5 +35,11 @@ inline void PmLogError(PmLogContext context, const char* msgid, int kvcount, ...
 inline void PmLogWarning(PmLogContext context, const char* msgid, int kvcount, ...) {}
 inline void PmLogInfo(PmLogContext context, const char* msgid, int kvcount, ...) {}
 inline void PmLogDebug(PmLogContext context, const char* fmt, ...) {}
+
+// PmLogGetContext mock
+inline PmLogErr PmLogGetContext(const char* contextName, PmLogContext* ctx) {
+    if (ctx) *ctx = nullptr;
+    return kPmLogErr_None;
+}
 
 #endif // PMLOGLIB_H_

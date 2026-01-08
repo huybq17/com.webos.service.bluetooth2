@@ -30,11 +30,49 @@ typedef void* gpointer;
 #define TRUE 1
 #define FALSE 0
 
+// GOptionEntry for command line parsing
+typedef enum {
+    G_OPTION_ARG_NONE,
+    G_OPTION_ARG_STRING,
+    G_OPTION_ARG_INT,
+    G_OPTION_ARG_CALLBACK,
+    G_OPTION_ARG_FILENAME,
+    G_OPTION_ARG_STRING_ARRAY,
+    G_OPTION_ARG_FILENAME_ARRAY,
+    G_OPTION_ARG_DOUBLE,
+    G_OPTION_ARG_INT64
+} GOptionArg;
+
+typedef struct _GOptionEntry {
+    const gchar *long_name;
+    gchar short_name;
+    gint flags;
+    GOptionArg arg;
+    gpointer arg_data;
+    const gchar *description;
+    const gchar *arg_description;
+} GOptionEntry;
+
+typedef struct _GOptionContext GOptionContext;
+
+struct _GOptionContext {
+    const char* summary;
+};
+
 typedef struct _GError {
     int domain;
     int code;
     char* message;
 } GError;
+
+typedef struct _GMainLoop GMainLoop;
+
+struct _GMainLoop {
+    gboolean is_running;
+    int ref_count;
+};
+
+typedef struct _GMainContext GMainContext;
 
 typedef enum {
     G_FILE_TEST_IS_REGULAR = 1 << 0,
@@ -94,6 +132,16 @@ inline void g_free(gpointer mem) {
     free(mem);
 }
 
+inline GError* g_error_new(int domain, int code, const char* format, ...) {
+    GError* error = (GError*)malloc(sizeof(GError));
+    if (error) {
+        error->domain = domain;
+        error->code = code;
+        error->message = strdup(format);
+    }
+    return error;
+}
+
 inline void g_error_free(GError *error) {
     if (error) {
         if (error->message) free(error->message);
@@ -121,6 +169,69 @@ inline gboolean g_spawn_sync(const gchar *working_directory,
                               GError **error) {
     if (exit_status) *exit_status = 0;
     return TRUE;
+}
+
+// GOptionContext functions
+inline GOptionContext* g_option_context_new(const gchar *parameter_string) {
+    GOptionContext* ctx = (GOptionContext*)malloc(sizeof(GOptionContext));
+    if (ctx) {
+        ctx->summary = parameter_string;
+    }
+    return ctx;
+}
+
+inline void g_option_context_add_main_entries(GOptionContext *context, 
+                                               const GOptionEntry *entries,
+                                               const gchar *translation_domain) {
+    // No-op for tests
+}
+
+inline gboolean g_option_context_parse(GOptionContext *context,
+                                        gint *argc,
+                                        gchar ***argv,
+                                        GError **error) {
+    return TRUE;
+}
+
+inline void g_option_context_free(GOptionContext *context) {
+    if (context) {
+        free(context);
+    }
+}
+
+// GMainLoop functions
+inline GMainLoop* g_main_loop_new(GMainContext *context, gboolean is_running) {
+    GMainLoop* loop = (GMainLoop*)malloc(sizeof(GMainLoop));
+    if (loop) {
+        loop->is_running = is_running;
+        loop->ref_count = 1;
+    }
+    return loop;
+}
+
+inline void g_main_loop_run(GMainLoop *loop) {
+    if (loop) {
+        loop->is_running = TRUE;
+    }
+}
+
+inline void g_main_loop_quit(GMainLoop *loop) {
+    if (loop) {
+        loop->is_running = FALSE;
+    }
+}
+
+inline void g_main_loop_unref(GMainLoop *loop) {
+    if (loop) {
+        loop->ref_count--;
+        if (loop->ref_count <= 0) {
+            free(loop);
+        }
+    }
+}
+
+inline gboolean g_main_loop_is_running(GMainLoop *loop) {
+    return loop ? loop->is_running : FALSE;
 }
 
 #endif // GLIB_H_MOCK_
